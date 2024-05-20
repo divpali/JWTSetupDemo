@@ -2,13 +2,21 @@ package com.demo.JWTSetupDemo.exception;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -50,6 +58,21 @@ public class GlobalExceptionHandler {
         if (errorDetail == null) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
             errorDetail.setProperty("description", "Unknown internal server error.");
+        }
+
+        if(exception instanceof MethodArgumentNotValidException) {
+            Map<String, List<String>> body = new HashMap<>();
+
+            List<String> errors = ((MethodArgumentNotValidException) exception).getBindingResult()
+                    .getFieldErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+
+            body.put("errors", errors);
+
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, body.toString());
+
         }
 
         return errorDetail;

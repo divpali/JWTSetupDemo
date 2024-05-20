@@ -1,4 +1,4 @@
-package com.demo.JWTSetupDemo.response;
+package com.demo.JWTSetupDemo.responseDtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
 package com.demo.JWTSetupDemo.services;
 
-import com.demo.JWTSetupDemo.dto.LoginUserDto;
-import com.demo.JWTSetupDemo.dto.RegisterUserDto;
+import com.demo.JWTSetupDemo.requestDtos.LoginUserDto;
+import com.demo.JWTSetupDemo.requestDtos.RegisterUserDto;
 import com.demo.JWTSetupDemo.entities.User;
 import com.demo.JWTSetupDemo.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
