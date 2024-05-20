@@ -91,3 +91,6 @@ ensures that the error responses have a consistent structure
 
 ### Reference Documentation
 https://medium.com/@tericcabrel/implement-jwt-authentication-in-a-spring-boot-3-application-5839e4fd8fac
+
+#### Validate Request Body and Parameter
+https://medium.com/@tericcabrel/validate-request-body-and-parameter-in-spring-boot-53ca77f97fe9
