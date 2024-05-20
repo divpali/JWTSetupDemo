@@ -20,12 +20,14 @@ public class ApplicationConfiguration {
         this.userRepository = userRepository;
     }
 
+    //retrieve user using UserRepository
     @Bean
     UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
+    //encode plain user password
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -36,6 +38,8 @@ public class ApplicationConfiguration {
         return config.getAuthenticationManager();
     }
 
+    //sets new strategy to perform authentication
+    //at this stage if we run the applcation we will not see the password getting generated in console like before
     @Bean
     AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
